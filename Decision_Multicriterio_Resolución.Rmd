@@ -1,0 +1,84 @@
+---
+title: "Decisión Multicriterio"
+author: "Alicia Casaux Vazquez"
+date: "Curso 2024/25"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 5
+lang: es
+number-sections: true
+toc: true
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, include=FALSE, warning=FALSE}
+source("teoriadecision_funciones_multicriterio_diagram.R")
+source("teoriadecision_funciones_multicriterio_utiles.R")
+source("teoriadecision_funciones_multicriterio.R")
+```
+
+
+# PROBLEMA DE DECISIÓN MULTICRITERIO: "COMPRA DE UN ORDENADOR PORTÁTIL"   
+
+Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo, se encuentra entre cinco diferentes modelos (*Dell XPS*, *MacBook Air*, *Lenovo ThinkPad*, *HP Spectre* y *Asus ZenBook*). Para elegir el mejor modelo se va estudiar una serie de criterios: **precio**, **rendimiento**, **duración de batería**, **peso/portabilidad**, **pantalla, durabilidad** y **conectividad/compatibilidad**.
+
+  -   **Matriz de Criterios**
+
+```{r, echo=FALSE}
+n.criterios <- c("Precio", "Rendimiento", "Duración de batería", "Peso/Portabilidad", "Pantalla", "Durabilidad", "Conectividad/Compatibilidad")
+tabcriterios <- multicriterio.crea.matrizvaloraciones_mej(c(5,7,1/3,3,9,1/5,
+                                                            1/3,5,1/9,7,3,
+                                                            1/7,3,1/3,9,
+                                                            3,1/9,1/5,
+                                                            9,1/7,
+                                                            1/9), 
+                                                          numalternativas = 7, v.nombres.alternativas = n.criterios)
+
+tabcriterios %>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position", "scale_down"), 
+                position = "center",
+                full_width = FALSE)
+```
+
+  -   **Matrices Alternativas/Criterios**
+  
+
+```{r, echo=FALSE}
+n.alternativas = c("Dell XPS", "MacBook Air", "Lenovo ThinkPad", "HP Spectre", "Asus ZenBook")
+```
+  
+        -   *Precio*
+
+```{r, echo=FALSE}
+tabprecio <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/3,5,1/5,
+                                                         1/7,1/9,1/3,
+                                                         5,9,
+                                                         1/7), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabprecio%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
+  
+  -   *Rendimiento*
+  
+  -   *Duración de batería*
+  
+  -   *Peso/Portabilidad*
+  
+  -   *Pantalla*
+  
+  -   *Durabilidad*
+  
+  -   *Conectividad/Compatibilidad*
+
+
