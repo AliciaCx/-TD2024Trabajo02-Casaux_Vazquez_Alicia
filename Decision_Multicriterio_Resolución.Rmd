@@ -1,5 +1,5 @@
 ---
-title: "Decisión Multicriterio"
+title: "Decisión Multicriterio: Compra de un ordenador portátil"
 author: "Alicia Casaux Vazquez"
 date: "Curso 2024/25"
 output:
@@ -22,8 +22,9 @@ source("teoriadecision_funciones_multicriterio_utiles.R")
 source("teoriadecision_funciones_multicriterio.R")
 ```
 
+\newpage
 
-# PROBLEMA DE DECISIÓN MULTICRITERIO: "COMPRA DE UN ORDENADOR PORTÁTIL"   
+# ENUNCIADO  
 
 Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo, se encuentra entre cinco diferentes modelos (*Dell XPS*, *MacBook Air*, *Lenovo ThinkPad*, *HP Spectre* y *Asus ZenBook*). Para elegir el mejor modelo se va estudiar una serie de criterios: **precio**, **rendimiento**, **duración de batería**, **peso/portabilidad**, **pantalla, durabilidad** y **conectividad/compatibilidad**.
 
@@ -53,7 +54,7 @@ tabcriterios %>%
 n.alternativas = c("Dell XPS", "MacBook Air", "Lenovo ThinkPad", "HP Spectre", "Asus ZenBook")
 ```
   
-        -   *Precio*
+  -   *Precio*
 
 ```{r, echo=FALSE}
 tabprecio <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/3,5,1/5,
@@ -70,15 +71,164 @@ tabprecio%>%
 ``` 
   
   -   *Rendimiento*
+```{r, echo=FALSE}
+tabrendimiento <- multicriterio.crea.matrizvaloraciones_mej(c(1/5,7,1/3,9,
+                                                              1/9,1/7,5,
+                                                              1/5,1/3,
+                                                              3), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabrendimiento%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
   
   -   *Duración de batería*
+```{r, echo=FALSE}
+tabbateria <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,5,1/7,3,
+                                                          1/7,9,1/7,
+                                                          3,5,
+                                                          7), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabbateria%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
   
+\newpage
+
   -   *Peso/Portabilidad*
+```{r, echo=FALSE}
+tabpeso <- multicriterio.crea.matrizvaloraciones_mej(c(9,5,1/3,1/7,
+                                                       1/5,1/3,5,
+                                                       1/7,1/9,
+                                                       7), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabpeso%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
   
   -   *Pantalla*
+```{r, echo=FALSE}
+tabpantalla <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/7,1/9,5,
+                                                           1/3,3,5,
+                                                           3,1/5,
+                                                           1/3), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabpantalla%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
   
   -   *Durabilidad*
+```{r, echo=FALSE}
+tabdurabilidad <- multicriterio.crea.matrizvaloraciones_mej(c(7,1/3,9,1/5,
+                                                              7,1/5,5,
+                                                              3,1/3,
+                                                              3), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
+
+tabdurabilidad%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
   
   -   *Conectividad/Compatibilidad*
+```{r, echo=FALSE}
+tabconect <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,5,1/7,5,
+                                                         1/9,1/3,7,
+                                                         3,1/5,
+                                                         9), 
+                                                          numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
+tabconect%>%
+  kable(booktabs = TRUE,format = "latex", digits = 2) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+``` 
+
+\newpage
+
+# RESOLUCIÓN
+
+## Funciones de clase
+**Cálculo pesos locales**
+
+*Método mayor autovalor*
+
+```{r}
+pes_criterios <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabcriterios)
+pes_precio <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabprecio)
+pes_rendimiento <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabrendimiento)
+pes_bateria <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabbateria)
+pes_peso <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabpeso)
+pes_pantalla <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabpantalla)
+pes_durabilidad <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabdurabilidad)
+pes_conect <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabconect)
+
+```
+
+**Cálculo pesos globales**
+
+```{r}
+tab01 <- multicriterio.metodoAHP.pesosglobales_entabla(pes_criterios$valoraciones.ahp, 
+                                                       rbind(pes_precio$valoraciones.ahp,
+                                                             pes_rendimiento$valoraciones.ahp,
+                                                             pes_bateria$valoraciones.ahp,
+                                                             pes_peso$valoraciones.ahp,
+                                                             pes_pantalla$valoraciones.ahp,
+                                                             pes_durabilidad$valoraciones.ahp,
+                                                             pes_conect$valoraciones.ahp))
+```
+
+```{r, echo=FALSE}
+tab01 %>%
+  kable(booktabs = TRUE,format = "latex") %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position", "scale_down"), 
+                position = "center",
+                full_width = FALSE)
+```
+
+La mejor decisión es el **Lenovo ThinkPad** con un peso global del 26,61%
+
+```{r}
+which.max(tab01[,1])
+which.max(tab01[,2])
+which.max(tab01[,3])
+which.max(tab01[,4])
+which.max(tab01[,5])
+which.max(tab01[,6])
+which.max(tab01[,7])
+```
+
+Para el precio la mejor alternativa es el **Lenovo ThinkPad**
+Para el rendimiento la mejor alternativa es el **HP Spectre**
+Para la duración de la batería la mejor alternativa es el **Lenovo ThinkPad**
+
+
+
+
+
+## Diagrama Jerarquías
+
+## Método AHP
+
+## Método ELECTRE
+
+## Método PROMETHEE
 
