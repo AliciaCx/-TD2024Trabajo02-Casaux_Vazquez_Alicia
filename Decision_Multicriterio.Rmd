@@ -5,11 +5,17 @@ date: "Curso 2024/25"
 output:
   pdf_document:
     toc: true
-    toc_depth: 5
+    toc_depth: 4
   html_document:
     toc: true
 lang: es
 ---
+
+\renewcommand\tablename{Tabla} 
+\renewcommand\spanishtablename{Tabla}
+\newcommand{\bcenter}{\begin{center}} 
+\newcommand{\ecenter}{\end{center}}
+\renewcommand{\footnotesize}{}
 
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -19,6 +25,11 @@ knitr::opts_chunk$set(echo = TRUE)
 source("teoriadecision_funciones_multicriterio_diagram.R")
 source("teoriadecision_funciones_multicriterio_utiles.R")
 source("teoriadecision_funciones_multicriterio.R")
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
 ```
 
 \newpage
@@ -163,11 +174,11 @@ tabconect%>%
 
 \newpage
 
-# RESOLUCIÓN
+## RESOLUCIÓN
 
-## Funciones de clase
+### Funciones de clase
 
-### Método 1 (mayor autovalor)
+#### Método 1 (mayor autovalor)
 
 **Cálculo pesos locales**
 
@@ -244,7 +255,7 @@ pes_durabilidad <- multicriterio.metodoAHP.variante3.basico(tabdurabilidad)
 pes_conect <- multicriterio.metodoAHP.variante3.basico(tabconect)
 ```
 
-### Método 2 (completo)
+#### Método 2 (completo)
 ```{r}
 num.alt = 5
 num.crt = 7
@@ -268,8 +279,8 @@ tab_com %>%
                 full_width = FALSE)
 ```
 
-## Diagrama Jerarquías
-```{r, echo=FALSE}
+### Diagrama Jerarquías
+```{r, echo=FALSE, fig.align='center'}
 num.alt <- 5
 num.crt <- 7
 Xmatriznivel2 <- array(NA, dim = c(num.alt, num.alt, num.crt))
@@ -284,7 +295,7 @@ dimnames(Xmatriznivel2)[[1]] <- n.alternativas
 multicriterio.metodoahp.diagrama(tabcriterios, Xmatriznivel2)
 ```
 
-## Método AHP
+### Método AHP
 ```{r,echo=FALSE}
 library(ahp)
 datos = Load("datos.ahp")
@@ -308,7 +319,293 @@ t2 = AnalyzeTable(datos, variable = "priority")
 export_formattable(t2, file = "tablaahp2.png")
 ```
 
-## Método ELECTRE
+\newpage
 
-## Método PROMETHEE
+# ENUNCIADO 2
+
+Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo.
+
+Considerando siete criterios como relevantes para tomar la decisión de clasificar cinco modelos de ordenador portátil.
+
+Los criterios son los siguientes:
+
+  -   $C_1$: Precio
+  
+  -   $C_2$: Rendimiento
+  
+  -   $C_3$: Duración de batería
+  
+  -   $C_4$: Peso/Portabilidad
+
+  -   $C_5$: Pantalla
+  
+  -   $C_6$: Durabilidad
+  
+  -   $C_7$: Conectividad/Compatibilidad
+  
+Y las alternativas son: 
+
+  -   $A_1$: Dell XPS
+  
+  -   $A_2$: HP Spectre
+  
+  -   $A_3$: Lenovo ThinkPad
+  
+  -   $A_4$: MacBook Air
+
+  -   $A_5$: Asus ZenBook
+
+Los criterios impares son de maximizar mientras que los criterios pares son de minimizar.
+
+La siguiente tabla muestra, para cada criterio, las evaluaciones de las seis acciones, el tipo de
+criterio generalizado especificado por el decisor, y los correspondientes parámetros. Se considera
+que los seis criterios tienen la misma importancia por lo que los pesos son iguales.
+
+La siguiente tabla muestra, la matriz de decisión, el tipo de
+criterio generalizado especificado por el decisor, y los correspondientes parámetros.
+El decisor proporciona a cada criterio los siguientes pesos preferenciales: W = (0.2,0.2,0.15,0.1,0.15,0.1,0.1).
+
+  -   Aplicar el método ELECTRE para ordenar las alternativas. Inicia el proceso con $\alpha = 0.7$ y 
+  d = (60,$\infty$,4,$\infty$,$\infty$,3,$\infty$)
+  
+  -   Usa los métodos de Promethee para ordenar las alternativas y obtener la mejor solución.
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+library(kableExtra)
+
+# Crear los datos de la tabla
+data <- data.frame(
+  Crit = c("C1", "C2", "C3", "C4", "C5", "C6", "C7"),
+  Min_Max = c("Max", "Min", "Max", "Min","Max", "Min","Max"),
+  A1 = c(82, 88, 5, 4.8, 10, 2, 7),
+  A2 = c(60, 70, 3, 8.1, 8, 3.5, 9),
+  A3 = c(75, 95, 6, 7.5, 12, 1, 6),
+  A4 = c(90, 65, 8, 5.2, 7, 4, 11),
+  A5 = c(68, 85, 4, 3.3, 9, 6, 8),
+  Tipo = c("II", "III", "V", "IV", "I", "VI", "I"),
+  Parámetros = c("q=15", "p=40", "q=0.8, p=5", "q=3, p=8","", "s=4", "")
+)
+
+# Generar la tabla con kable y kableExtra
+kable(data,booktabs = TRUE, align = "c", linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"),
+                position = "center",
+                full_width = FALSE) %>%
+  column_spec(1, bold = TRUE) %>%
+  add_header_above(c(" " = 2, "Alternativas" = 5, " " = 2))
+```
+
+## RESOLUCIÓN
+
+**Matriz de decisión**
+
+```{r, echo=FALSE}
+tab_ep <- multicriterio.crea.matrizdecision(c(82, -88, 5, -4.8, 10, -2, 7,
+                                              60, -70, 3, -8.1, 8, -3.5, 9,
+                                              75, -95, 6, -7.5, 12, -1, 6,
+                                              90, -65, 8, -5.2, 7, -4, 11,
+                                              68, -85, 4, -3.3, 9, -6, 8),
+                                           numalternativas = 5,
+                                           numcriterios = 7)
+```
+
+```{r, echo=FALSE}
+tab_ep %>%
+  kable(booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+```
+
+### Método ELECTRE
+
+#### Iteración 1. Introducir datos y resolver
+```{r}
+sal <- multicriterio.metodoELECTRE_I(tab_ep, 
+                                       pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
+                                       nivel.concordancia.minimo.alpha = 0.7,
+                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
+                                       que.alternativas = T)
+```
+
+
+```{r, fig.align='center', echo=FALSE}
+qgraph::qgraph(sal$relacion.dominante)
+```
+
+
+```{r,echo=FALSE}
+sal$nucleo_aprox
+```
+
+Obtenemos el siguiente orden: Dell XPS, Lenovo ThinkPad, MacBook Air
+
+#### Iteración 2 y 3. Se reducen aleternativas y/o alpha 
+
+Para intentar quedarse con una única alternativa óptima:
+
+  -   reducir el grafo a las alternativas en el núcleo y/o
+
+  -   reducir el valor de alpha [0.5, 1)
+
+Dejamos el mismo alpha per elgimos las alternativas 1,3,4
+```{r, echo=FALSE}
+sal2 <- multicriterio.metodoELECTRE_I(tab_ep, 
+                                       pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
+                                       nivel.concordancia.minimo.alpha = 0.7,
+                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
+                                       que.alternativas = c(1,3,4))
+```
+
+
+```{r, fig.align='center', echo=FALSE}
+qgraph::qgraph(sal2$relacion.dominante)
+```
+
+
+```{r, echo=FALSE}
+sal2$nucleo_aprox
+```
+
+Vamos cambiando alpha hasta que obtengamos un único núcleo, en este caso usaremos $\alpha=0.6$ y mantenemos las alternaticas que nos han salido al principio
+
+```{r, echo=FALSE}
+sal3 <- multicriterio.metodoELECTRE_I(tab_ep, 
+                                       pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
+                                       nivel.concordancia.minimo.alpha = 0.60,
+                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
+                                       que.alternativas = c(1,3,4))
+```
+
+
+```{r, fig.align='center', echo=FALSE}
+qgraph::qgraph(sal3$relacion.dominante)
+```
+
+
+```{r,echo=FALSE}
+sal3$nucleo_aprox
+```
+
+Como alternativa óptima única tenemos la $A_4$: MacBook Air
+
+#### ELECTRE I
+
+```{r}
+elec <- func_ELECTRE_Completo(sal)
+elec$Grafo
+```
+
+```{r, fig.align='center', echo=FALSE}
+qgraph::qgraph(elec$Grafo)
+```
+
+Tenemos que: $a_1Sa_2$,  $a_3Sa_2$,  $a_4Sa_2$, y  $a_4Sa_5$
+
+```{r, echo=FALSE}
+elec$Nucleo
+```
+
+Obtenemos el siguiente orden: Dell XPS, Lenovo ThinkPad, MacBook Air
+
+### Método PROMETHEE
+
+**Tabla preferencias**
+```{r, echo=FALSE}
+pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1)
+tab.fpref = matrix (c(2,15,1,0,
+                      3,0,40,0,
+                      5,0.8,5,0,
+                      4,3,8,0,
+                      1,0,1,0,
+                      6,0,1,4,
+                      1,0,1,0),ncol=4,byrow=T)
+```
+
+```{r, echo=FALSE}
+tab.fpref %>%
+  kable(booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+```
+
+#### PROMETHEE I
+
+```{r}
+(tab.Pthee.i = multicriterio.metodo.promethee_i(tab_ep,pesos.criterios,tab.fpref))
+```
+
+```{r, fig.align='center', echo=FALSE}
+require ("qgraph")
+qgraph(tab.Pthee.i$tablarelacionsupera)
+```
+
+
+#### PROMETHEE II
+
+```{r}
+(tab.Pthee.ii = multicriterio.metodo.promethee_ii(tab_ep,pesos.criterios,tab.fpref))
+```
+
+```{r, fig.align='center', echo=FALSE}
+qgraph(tab.Pthee.ii$tablarelacionsupera)
+```
+
+#### PROMETHEE I (medias)
+
+```{r}
+(tab.Pthee.i_med = multicriterio.metodo.promethee_i_med(tab_ep,pesos.criterios,tab.fpref))
+```
+
+```{r, fig.align='center', echo=FALSE}
+qgraph(tab.Pthee.i_med$tablarelacionsupera)
+```
+
+#### PROMETHEE II (medias)
+
+```{r}
+(tab.Pthee.ii_med = multicriterio.metodo.promethee_ii_med(tab_ep,pesos.criterios,tab.fpref))
+```
+
+```{r, fig.align='center', echo=FALSE}
+qgraph(tab.Pthee.ii_med$tablarelacionsupera)
+```
+
+#### Comparativa Promethee II: sin medias y con medias
+
+```{r, echo=FALSE}
+order(tab.Pthee.ii$vflujos.netos,decreasing = T)
+order(tab.Pthee.ii_med$vflujos.netos,decreasing = T)
+```
+
+### Resolución con Promethee Windows 
+
+```{r}
+res = multicriterio.metodo.promethee_windows(tab_ep, tab.fpref, pesos.criterios)
+res = multicriterio.metodo.promethee_windows (tab_ep, tab.fpref, pesos.criterios,
+fminmax = c("max", "min", "max", "min","max", "min","max"))
+
+res02 = multicriterio.metodo.promethee_windows_kableExtra(res)
+```
+
+
+```{r, echo=FALSE}
+res02$tabEscenario %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position", "scale_down"), 
+                position = "center")
+```
+
+**Tabla acciones**
+
+```{r, echo=FALSE}
+res02$tabAcciones %>%
+  kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
+                position = "center",
+                full_width = FALSE)
+rownames(res$Acciones)
+```
+
+
 
