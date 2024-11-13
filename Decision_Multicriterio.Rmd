@@ -1,21 +1,15 @@
 ---
-title: "Decisión Multicriterio: Compra de un ordenador portátil"
+title: "Decisión Multicriterio"
 author: "Alicia Casaux Vazquez"
 date: "Curso 2024/25"
 output:
-  pdf_document:
-    toc: true
-    toc_depth: 4
   html_document:
     toc: true
+  pdf_document:
+    toc: true
+    toc_depth: 5
 lang: es
 ---
-
-\renewcommand\tablename{Tabla} 
-\renewcommand\spanishtablename{Tabla}
-\newcommand{\bcenter}{\begin{center}} 
-\newcommand{\ecenter}{\end{center}}
-\renewcommand{\footnotesize}{}
 
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -34,20 +28,20 @@ library(kableExtra)
 
 \newpage
 
-# ENUNCIADO 1 
+# ENUNCIADO 1
 
 Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo, se encuentra entre cinco diferentes modelos (*Dell XPS*, *HP Spectre*, *Lenovo ThinkPad*, *MacBook Air* y *Asus ZenBook*). Para elegir el mejor modelo se va estudiar una serie de criterios: **precio**, **rendimiento**, **duración de batería**, **peso/portabilidad**, **pantalla, durabilidad** y **conectividad/compatibilidad**.
 
-  -   **Matriz de Criterios**
+-   **Matriz de Criterios**
 
 ```{r, echo=FALSE}
 n.criterios <- c("Precio", "Rendimiento", "Duración de batería", "Peso/Portabilidad", "Pantalla", "Durabilidad", "Conectividad/Compatibilidad")
-tabcriterios <- multicriterio.crea.matrizvaloraciones_mej(c(5,7,1/3,3,9,1/5,
-                                                            1/3,5,1/9,7,3,
-                                                            1/7,3,1/3,9,
-                                                            3,1/9,1/5,
-                                                            9,1/7,
-                                                            1/9), 
+tabcriterios <- multicriterio.crea.matrizvaloraciones_mej(c(1/8,1/7,3,1/3,1/9,1/5,
+                                                            1,9,5,1,2,
+                                                            9,4,1/2,2,
+                                                            1/3,1/9,1/5,
+                                                            1/5, 1/2,
+                                                            3), 
                                                           numalternativas = 7, v.nombres.alternativas = n.criterios)
 
 tabcriterios %>%
@@ -57,20 +51,19 @@ tabcriterios %>%
                 full_width = FALSE)
 ```
 
-  -   **Matrices Alternativas/Criterios**
-  
+-   **Matrices Alternativas/Criterios**
 
 ```{r, echo=FALSE}
 n.alternativas = c("Dell XPS", "HP Spectre", "Lenovo ThinkPad", "MacBook Air", "Asus ZenBook")
 ```
-  
-  -   *Precio*
+
+-   *Precio*
 
 ```{r, echo=FALSE}
-tabprecio <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/3,5,1/5,
-                                                         1/7,1/9,1/3,
-                                                         5,9,
-                                                         1/7), 
+tabprecio <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,1/9,1/5,1/7,
+                                                         1/7,1/2,1/4,
+                                                         4,2,
+                                                         1/2), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
 tabprecio%>%
@@ -78,14 +71,15 @@ tabprecio%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
-  -   *Rendimiento*
+```
+
+-   *Rendimiento*
+
 ```{r, echo=FALSE}
-tabrendimiento <- multicriterio.crea.matrizvaloraciones_mej(c(1/5,7,1/3,9,
-                                                              1/9,1/7,5,
-                                                              1/5,1/3,
-                                                              3), 
+tabrendimiento <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/3,1/4,5,
+                                                              1/5,1/7,2,
+                                                              1/2,9,
+                                                              9), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
 tabrendimiento%>%
@@ -93,14 +87,15 @@ tabrendimiento%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
-  -   *Duración de batería*
+```
+
+-   *Duración de batería*
+
 ```{r, echo=FALSE}
-tabbateria <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,5,1/7,3,
-                                                          1/7,9,1/7,
-                                                          3,5,
-                                                          7), 
+tabbateria <- multicriterio.crea.matrizvaloraciones_mej(c(5,3,1/3,7,
+                                                          1/2,1/7,2,
+                                                          1/4,3,
+                                                          9), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
 tabbateria%>%
@@ -108,16 +103,17 @@ tabbateria%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
+```
+
 \newpage
 
-  -   *Peso/Portabilidad*
+-   *Peso/Portabilidad*
+
 ```{r, echo=FALSE}
-tabpeso <- multicriterio.crea.matrizvaloraciones_mej(c(9,5,1/3,1/7,
-                                                       1/5,1/3,5,
-                                                       1/7,1/9,
-                                                       7), 
+tabpeso <- multicriterio.crea.matrizvaloraciones_mej(c(1/5,1/7,1/9,1/3,
+                                                       1/2,1/4,2,
+                                                       1/2,4,
+                                                       6), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
 tabpeso%>%
@@ -125,13 +121,14 @@ tabpeso%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
-  -   *Pantalla*
+```
+
+-   *Pantalla*
+
 ```{r, echo=FALSE}
-tabpantalla <- multicriterio.crea.matrizvaloraciones_mej(c(3,1/7,1/9,5,
-                                                           1/3,3,5,
-                                                           3,1/5,
+tabpantalla <- multicriterio.crea.matrizvaloraciones_mej(c(5,1/3,7,3,
+                                                           1/8,2,1/2,
+                                                           9,4,
                                                            1/3), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
@@ -140,13 +137,14 @@ tabpantalla%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
-  -   *Durabilidad*
+```
+
+-   *Durabilidad*
+
 ```{r, echo=FALSE}
-tabdurabilidad <- multicriterio.crea.matrizvaloraciones_mej(c(7,1/3,9,1/5,
-                                                              7,1/5,5,
-                                                              3,1/3,
+tabdurabilidad <- multicriterio.crea.matrizvaloraciones_mej(c(5,1/3,3,7,
+                                                              1/9,1/2,2,
+                                                              5,9,
                                                               3), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
@@ -155,14 +153,15 @@ tabdurabilidad%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
-  
-  -   *Conectividad/Compatibilidad*
+```
+
+-   *Conectividad/Compatibilidad*
+
 ```{r, echo=FALSE}
-tabconect <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,5,1/7,5,
-                                                         1/9,1/3,7,
-                                                         3,1/5,
-                                                         9), 
+tabconect <- multicriterio.crea.matrizvaloraciones_mej(c(1/3,3,7,5,
+                                                         4,9,8,
+                                                         3,2,
+                                                         1/2), 
                                                           numalternativas = 5, v.nombres.alternativas = n.alternativas)
 
 tabconect%>%
@@ -170,19 +169,71 @@ tabconect%>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position"), 
                 position = "center",
                 full_width = FALSE)
-``` 
+```
 
 \newpage
 
-## RESOLUCIÓN
+# ENUNCIADO 2
 
-### Funciones de clase
+Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo.
 
-#### Método 1 (mayor autovalor)
+Considerando siete criterios como relevantes para tomar la decisión de clasificar cinco modelos de ordenador portátil.
+
+Los criterios son los siguientes:
+
+-   $C_1$: Precio
+
+-   $C_2$: Rendimiento
+
+-   $C_3$: Duración de batería
+
+-   $C_4$: Peso/Portabilidad
+
+-   $C_5$: Pantalla
+
+-   $C_6$: Durabilidad
+
+-   $C_7$: Conectividad/Compatibilidad
+
+Y las alternativas son:
+
+-   $A_1$: Dell XPS
+
+-   $A_2$: HP Spectre
+
+-   $A_3$: Lenovo ThinkPad
+
+-   $A_4$: MacBook Air
+
+-   $A_5$: Asus ZenBook
+
+Los criterios impares son de maximizar mientras que los criterios pares son de minimizar.
+
+La siguiente tabla muestra, la matriz de decisión, el tipo de criterio generalizado especificado por el decisor, y los correspondientes parámetros. El decisor proporciona a cada criterio los siguientes pesos preferenciales: = W(0.05,0.25,0.15,0.05,0.1,0.3,0.1)
+
+-   Aplicar el método ELECTRE para ordenar las alternativas. Inicia el proceso con $\alpha = 0.7$ y d = (600, $\infty$, 4, $\infty$, $\infty$, 3, $\infty$)
+
+-   Usa los métodos de Promethee para ordenar las alternativas y obtener la mejor solución.
+
+| Crit  | Min-Max | $A_1$ | $A_2$ | $A_3$ | $A_4$ | $A_5$ | Tipo | Parámetros |
+|:-----:|:-------:|:-----:|:-----:|:-----:|:-----:|:-----:|:----:|:----------:|
+| $C_1$ |   Max   | 1700  | 1500  |  700  | 1300  |  900  |  II  |    q=15    |
+| $C_2$ |   Min   |  4,2  |   4   |  4,5  |  4,7  |  3,8  | III  |    p=40    |
+| $C_3$ |   Max   |  17   |  15   | 15,5  |  18   |  14   |  V   | q=0,8,p=5  |
+| $C_4$ |   Min   |  1,4  |  1,3  | 1,25  |  1,2  | 1,35  |  IV  |  q=3,p=8   |
+| $C_5$ |   Max   |  15   |  14   | 15,5  |  13   | 14,4  |  II  |   q=10     |
+| $C_6$ |   Min   |  4,5  |   4   |   5   |  4,2  |  3,9  |  VI  |    s=4     |
+| $C_7$ |   Max   |  4,8  |   5   |  4,5  |  3,5  |   4   |  III |   p=20     |
+
+\newpage
+
+# RESOLUCIÓN 1
+
+## Funciones de clase
+
+### Método 1 (mayor autovalor)
 
 **Cálculo pesos locales**
-
-*Método mayor autovalor*
 
 ```{r}
 pes_criterios <- multicriterio.metodoAHP.variante1.autovectormayorautovalor(tabcriterios)
@@ -217,21 +268,24 @@ tab01 %>%
                 full_width = FALSE)
 ```
 
-En general, la mejor decisión es el **Lenovo ThinkPad** con un peso global del 26,04%
+En general, la mejor decisión es el **Lenovo ThinkPad** con un peso global del 32,89% seguido por el **MacBook Air** con un 27,77%. La peor alternativa es el **Asus ZenBook** con un 5,42%.
 
 Por criterios;
 
-  -   Para el precio la mejor alternativa es el **Lenovo ThinkPad**
-  -   Para el rendimiento la mejor alternativa es el **MacBook Air**
-  -   Para la duración de la batería la mejor alternativa es el **Lenovo ThinkPad**
-  -   Para el peso la mejor alternativa es el **MacBook Air**
-  -   Para la pantalla la mejor alternativa es el **Lenovo ThinkPad**
-  -   Para el durabilidad la mejor alternativa es el **Dell XPS**
-  -   Para la conectividad la mejor alternativa es el **MacBook Air**
-  
+-   Para el precio la mejor alternativa es el **Lenovo ThinkPad**
+-   Para el rendimiento la mejor alternativa es el **MacBook Air**
+-   Para la duración de la batería la mejor alternativa es el **MacBook Air**
+-   Para el peso la mejor alternativa es el **MacBook Air**
+-   Para la pantalla la mejor alternativa es el **Lenovo ThinkPad**
+-   Para el durabilidad la mejor alternativa es el **Lenovo ThinkPad**
+-   Para la conectividad la mejor alternativa es el **HP Spectre**
+
+\newpage
+
 Además del método de mayor autovalor, tambien tenemos:
 
-  -   *Método de media geométrica*
+-   *Método de media geométrica*
+
 ```{r}
 pes_criterios <- multicriterio.metodoAHP.variante2.mediageometrica(tabcriterios)
 pes_precio <- multicriterio.metodoAHP.variante2.mediageometrica(tabprecio)
@@ -243,7 +297,8 @@ pes_durabilidad <- multicriterio.metodoAHP.variante2.mediageometrica(tabdurabili
 pes_conect <- multicriterio.metodoAHP.variante2.mediageometrica(tabconect)
 ```
 
-  -   *Método básico*
+-   *Método básico*
+
 ```{r}
 pes_criterios <- multicriterio.metodoAHP.variante3.basico(tabcriterios)
 pes_precio <- multicriterio.metodoAHP.variante3.basico(tabprecio)
@@ -255,8 +310,9 @@ pes_durabilidad <- multicriterio.metodoAHP.variante3.basico(tabdurabilidad)
 pes_conect <- multicriterio.metodoAHP.variante3.basico(tabconect)
 ```
 
-#### Método 2 (completo)
-```{r}
+### Método 2 (completo)
+
+```{r, echo=FALSE}
 num.alt = 5
 num.crt = 7
 Xarray_nivel2 = array (NA, dim=c(num.alt, num.alt, num.crt))
@@ -277,9 +333,13 @@ tab_com %>%
   kable_styling(latex_options = c("striped", "condensed","HOLD_position", "scale_down"), 
                 position = "center",
                 full_width = FALSE)
+
 ```
 
-### Diagrama Jerarquías
+En general, la mejor decisión es el **Lenovo ThinkPad** con un peso global del 32,66% seguido por el **MacBook Air** con un 27,59%. La peor alternativa es el **Asus ZenBook** con un 5,56%.
+
+## Diagrama Jerarquías
+
 ```{r, echo=FALSE, fig.align='center'}
 num.alt <- 5
 num.crt <- 7
@@ -295,10 +355,13 @@ dimnames(Xmatriznivel2)[[1]] <- n.alternativas
 multicriterio.metodoahp.diagrama(tabcriterios, Xmatriznivel2)
 ```
 
-### Método AHP
-```{r,echo=FALSE}
+Vemos que los resultados coinciden con la solución del método 2.
+
+## Método AHP
+
+```{r,echo=FALSE, warning=FALSE}
 library(ahp)
-datos = Load("datos.ahp")
+datos = Load("datos2.ahp")
 Calculate(datos)
 ```
 
@@ -312,6 +375,20 @@ Visualize(datos)
 export_formattable(AnalyzeTable(datos), file = "tablaahp1.png")
 ```
 
+Esta tabla muestra la contribución total de cada criterio al peso final para cada modelo de ordenador portátil. La columna “Weight” indica la importancia o peso de cada criterio en la decisión general de elegir el mejor ordenador portátil. Cada valor en las columnas correspondientes a los modelos (Lenovo ThinkPad, MacBook Air, etc.) indica el porcentaje de contribución de ese modelo basado en el criterio correspondiente. Valores de inconsistencia más altos indican menor consistencia en la evaluación de ese criterio.
+
+  -   Durabilidad (29.9%): Es el criterio más importante, y el Lenovo ThinkPad tiene la mayor contribución en esta categoría (16.0%), seguido del Dell XPS (7.8%).
+  
+  -   Rendimiento (24.8%): También es un criterio clave, con el MacBook Air liderando (11.5%), seguido por Lenovo ThinkPad (7.6%).
+
+  -   Duración de batería (21.4%): Aquí, el MacBook Air se destaca con el mayor porcentaje (10.9%).
+
+  -   Conectividad/Compatibilidad (11.9%): HP Spectre es el que más contribuye en este aspecto (6.1%).
+
+  -   Pantalla, Precio y Peso/Portabilidad: Estos criterios tienen pesos menores (6.3%, 3.4% y 2.3%, respectivamente) en la decisión final.
+
+El índice de inconsistencia es bajo en todas las categorías (rango de 1.8% a 2.5%), lo que indica que las evaluaciones fueron bastante consistentes.
+
 **Tabla solución (pesos locales)**
 
 ```{r, echo=FALSE}
@@ -319,93 +396,46 @@ t2 = AnalyzeTable(datos, variable = "priority")
 export_formattable(t2, file = "tablaahp2.png")
 ```
 
+Esta tabla muestra los pesos locales para cada criterio, reflejando la importancia relativa de cada ordenador portátil según cada criterio de forma individual. La columna “Priority” indica la relevancia de cada criterio para la elección final, mientras que los valores en cada fila muestran el peso porcentual de cada modelo dentro de ese criterio.
+
+  -   Durabilidad (29.9%): Lenovo ThinkPad tiene un peso muy alto (53.6%) dentro de este criterio, lo que sugiere que es considerado el más duradero.
+
+  -   Rendimiento (24.8%): El MacBook Air lidera en rendimiento con un 46.1%, siendo la opción preferida en este criterio.
+
+  -   Duración de batería (21.4%): MacBook Air también se destaca en este criterio, con un peso local de 50.9%.
+
+  -   Conectividad/Compatibilidad (11.9%): HP Spectre tiene un peso destacado (51.6%) en este criterio.
+
+  -   Pantalla (6.3%): Lenovo ThinkPad lidera este criterio con un 51.6%.
+
+  -   Precio (3.4%): El Asus ZenBook tiene un peso significativo en esta categoría (26.5%), sugiriendo que es una opción económica.
+
+  -   Peso/Portabilidad (2.3%): El MacBook Air tiene el mayor peso en esta categoría (47.1%).
+
+La inconsistencia es similar a la tabla anterior, siendo baja en general y asegurando una evaluación coherente.
+
+## Conclusión
+
+La tabla de contribución total muestra cómo cada criterio contribuye al peso global de cada modelo.
+
+La tabla de pesos locales muestra la importancia de cada ordenador portátil en cada criterio específico.
+
+En conjunto, estas tablas ayudan a identificar cuál ordenador es el mejor para diferentes prioridades de criterios.
+
+Por lo tanto obtenemos el siguiente orden para nuestra elección: Lenovo ThinkPad, MacBook Air, Dell XPS, HP Spectre, Asus ZenBook.
+
 \newpage
 
-# ENUNCIADO 2
-
-Un usuario está considerando comprar un nuevo ordenador portátil para mejorar la productividad en su trabajo.
-
-Considerando siete criterios como relevantes para tomar la decisión de clasificar cinco modelos de ordenador portátil.
-
-Los criterios son los siguientes:
-
-  -   $C_1$: Precio
-  
-  -   $C_2$: Rendimiento
-  
-  -   $C_3$: Duración de batería
-  
-  -   $C_4$: Peso/Portabilidad
-
-  -   $C_5$: Pantalla
-  
-  -   $C_6$: Durabilidad
-  
-  -   $C_7$: Conectividad/Compatibilidad
-  
-Y las alternativas son: 
-
-  -   $A_1$: Dell XPS
-  
-  -   $A_2$: HP Spectre
-  
-  -   $A_3$: Lenovo ThinkPad
-  
-  -   $A_4$: MacBook Air
-
-  -   $A_5$: Asus ZenBook
-
-Los criterios impares son de maximizar mientras que los criterios pares son de minimizar.
-
-La siguiente tabla muestra, para cada criterio, las evaluaciones de las seis acciones, el tipo de
-criterio generalizado especificado por el decisor, y los correspondientes parámetros. Se considera
-que los seis criterios tienen la misma importancia por lo que los pesos son iguales.
-
-La siguiente tabla muestra, la matriz de decisión, el tipo de
-criterio generalizado especificado por el decisor, y los correspondientes parámetros.
-El decisor proporciona a cada criterio los siguientes pesos preferenciales: W = (0.2,0.2,0.15,0.1,0.15,0.1,0.1).
-
-  -   Aplicar el método ELECTRE para ordenar las alternativas. Inicia el proceso con $\alpha = 0.7$ y 
-  d = (60,$\infty$,4,$\infty$,$\infty$,3,$\infty$)
-  
-  -   Usa los métodos de Promethee para ordenar las alternativas y obtener la mejor solución.
-
-```{r echo=FALSE, results='asis'}
-library(knitr)
-library(kableExtra)
-
-# Crear los datos de la tabla
-data <- data.frame(
-  Crit = c("C1", "C2", "C3", "C4", "C5", "C6", "C7"),
-  Min_Max = c("Max", "Min", "Max", "Min","Max", "Min","Max"),
-  A1 = c(82, 88, 5, 4.8, 10, 2, 7),
-  A2 = c(60, 70, 3, 8.1, 8, 3.5, 9),
-  A3 = c(75, 95, 6, 7.5, 12, 1, 6),
-  A4 = c(90, 65, 8, 5.2, 7, 4, 11),
-  A5 = c(68, 85, 4, 3.3, 9, 6, 8),
-  Tipo = c("II", "III", "V", "IV", "I", "VI", "I"),
-  Parámetros = c("q=15", "p=40", "q=0.8, p=5", "q=3, p=8","", "s=4", "")
-)
-
-# Generar la tabla con kable y kableExtra
-kable(data,booktabs = TRUE, align = "c", linesep = "") %>%
-  kable_styling(latex_options = c("striped", "hold_position"),
-                position = "center",
-                full_width = FALSE) %>%
-  column_spec(1, bold = TRUE) %>%
-  add_header_above(c(" " = 2, "Alternativas" = 5, " " = 2))
-```
-
-## RESOLUCIÓN
+# RESOLUCIÓN 2
 
 **Matriz de decisión**
 
 ```{r, echo=FALSE}
-tab_ep <- multicriterio.crea.matrizdecision(c(82, -88, 5, -4.8, 10, -2, 7,
-                                              60, -70, 3, -8.1, 8, -3.5, 9,
-                                              75, -95, 6, -7.5, 12, -1, 6,
-                                              90, -65, 8, -5.2, 7, -4, 11,
-                                              68, -85, 4, -3.3, 9, -6, 8),
+tab_ep <- multicriterio.crea.matrizdecision(c(1700,-4.2,17,-1.4,15,-4.5,4.8,
+                                              1500,-4,15,-1.3,14,-4,5,
+                                              700,-4.5,15.5,-1.25,15.5,-5,4.5,
+                                              1300,-4.7,18,-1.2,13,-4.2,3.5,
+                                              900,-3.8,14,-1.35,14.4,-3.9,4),
                                            numalternativas = 5,
                                            numcriterios = 7)
 ```
@@ -418,109 +448,108 @@ tab_ep %>%
                 full_width = FALSE)
 ```
 
-### Método ELECTRE
+## Método ELECTRE
 
-#### Iteración 1. Introducir datos y resolver
+### Iteración 1. Introducir datos y resolver
+
 ```{r}
 sal <- multicriterio.metodoELECTRE_I(tab_ep, 
-                                       pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
+                                       pesos.criterios = c(0.05,0.25,0.15,0.05,0.1,0.3,0.1),
                                        nivel.concordancia.minimo.alpha = 0.7,
-                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
+                                       no.se.compensan = c(600, Inf, 4, Inf, Inf, 3, Inf),
                                        que.alternativas = T)
 ```
-
 
 ```{r, fig.align='center', echo=FALSE}
 qgraph::qgraph(sal$relacion.dominante)
 ```
 
-
 ```{r,echo=FALSE}
 sal$nucleo_aprox
 ```
 
-Obtenemos el siguiente orden: Dell XPS, Lenovo ThinkPad, MacBook Air
+Obtenemos el siguiente orden: HP Spectre y Asus ZenBook
 
-#### Iteración 2 y 3. Se reducen aleternativas y/o alpha 
+### Iteración 2 y 3. Se reducen aleternativas y/o alpha.
 
 Para intentar quedarse con una única alternativa óptima:
 
-  -   reducir el grafo a las alternativas en el núcleo y/o
+-   reducir el grafo a las alternativas en el núcleo y/o
 
-  -   reducir el valor de alpha [0.5, 1)
+-   reducir el valor de alpha [0.5, 1)
 
-Dejamos el mismo alpha per elgimos las alternativas 1,3,4
+Dejamos el mismo alpha pero elegimos las alternativas 2,5
+
 ```{r, echo=FALSE}
 sal2 <- multicriterio.metodoELECTRE_I(tab_ep, 
                                        pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
                                        nivel.concordancia.minimo.alpha = 0.7,
-                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
-                                       que.alternativas = c(1,3,4))
+                                       no.se.compensan = c(600, Inf, 4, Inf, Inf, 3, Inf),
+                                       que.alternativas = c(2,5))
 ```
-
 
 ```{r, fig.align='center', echo=FALSE}
 qgraph::qgraph(sal2$relacion.dominante)
 ```
 
-
 ```{r, echo=FALSE}
 sal2$nucleo_aprox
 ```
 
-Vamos cambiando alpha hasta que obtengamos un único núcleo, en este caso usaremos $\alpha=0.6$ y mantenemos las alternaticas que nos han salido al principio
+\newpage
+
+Vamos cambiando alpha hasta que obtengamos un único núcleo, en este caso usaremos $\alpha=0.55$ y mantenemos las alternativas que nos han salido al principio
 
 ```{r, echo=FALSE}
 sal3 <- multicriterio.metodoELECTRE_I(tab_ep, 
                                        pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1),
-                                       nivel.concordancia.minimo.alpha = 0.60,
-                                       no.se.compensan = c(60, Inf, 4, Inf, Inf, 3, Inf),
-                                       que.alternativas = c(1,3,4))
+                                       nivel.concordancia.minimo.alpha = 0.55,
+                                       no.se.compensan = c(600, Inf, 4, Inf, Inf, 3, Inf),
+                                       que.alternativas = c(2,5))
 ```
-
 
 ```{r, fig.align='center', echo=FALSE}
 qgraph::qgraph(sal3$relacion.dominante)
 ```
 
-
 ```{r,echo=FALSE}
 sal3$nucleo_aprox
 ```
 
-Como alternativa óptima única tenemos la $A_4$: MacBook Air
+Como alternativa óptima única tenemos la $A_2$: HP Spectre
 
-#### ELECTRE I
+### ELECTRE I
 
-```{r}
+```{r, echo=FALSE}
 elec <- func_ELECTRE_Completo(sal)
-elec$Grafo
+g <- elec$Grafo
 ```
 
 ```{r, fig.align='center', echo=FALSE}
 qgraph::qgraph(elec$Grafo)
 ```
 
-Tenemos que: $a_1Sa_2$,  $a_3Sa_2$,  $a_4Sa_2$, y  $a_4Sa_5$
+Tenemos que: $a_1Sa_3$, $a_2Sa_1$, $a_2Sa_3$, y $a_2Sa_4$
 
 ```{r, echo=FALSE}
 elec$Nucleo
 ```
 
-Obtenemos el siguiente orden: Dell XPS, Lenovo ThinkPad, MacBook Air
+Obtenemos el siguiente orden: HP Spectre, AsusZenBook
 
-### Método PROMETHEE
+## Método PROMETHEE
 
 **Tabla preferencias**
+
 ```{r, echo=FALSE}
-pesos.criterios = c(0.2,0.2,0.15,0.1,0.15,0.1,0.1)
+pesos.criterios = c(0.05,0.25,0.15,0.05,0.1,0.3,0.1)
 tab.fpref = matrix (c(2,15,1,0,
                       3,0,40,0,
                       5,0.8,5,0,
                       4,3,8,0,
-                      1,0,1,0,
+                      2,10,1,0,
                       6,0,1,4,
-                      1,0,1,0),ncol=4,byrow=T)
+                      3,0,20,0),ncol=4,byrow=T)
 ```
 
 ```{r, echo=FALSE}
@@ -531,9 +560,11 @@ tab.fpref %>%
                 full_width = FALSE)
 ```
 
-#### PROMETHEE I
+\newpage
 
-```{r}
+### PROMETHEE I
+
+```{r, echo=FALSE}
 (tab.Pthee.i = multicriterio.metodo.promethee_i(tab_ep,pesos.criterios,tab.fpref))
 ```
 
@@ -542,10 +573,11 @@ require ("qgraph")
 qgraph(tab.Pthee.i$tablarelacionsupera)
 ```
 
+\newpage
 
-#### PROMETHEE II
+### PROMETHEE II
 
-```{r}
+```{r, echo=FALSE}
 (tab.Pthee.ii = multicriterio.metodo.promethee_ii(tab_ep,pesos.criterios,tab.fpref))
 ```
 
@@ -553,9 +585,11 @@ qgraph(tab.Pthee.i$tablarelacionsupera)
 qgraph(tab.Pthee.ii$tablarelacionsupera)
 ```
 
-#### PROMETHEE I (medias)
+\newpage
 
-```{r}
+### PROMETHEE I (medias)
+
+```{r, echo=FALSE}
 (tab.Pthee.i_med = multicriterio.metodo.promethee_i_med(tab_ep,pesos.criterios,tab.fpref))
 ```
 
@@ -563,9 +597,11 @@ qgraph(tab.Pthee.ii$tablarelacionsupera)
 qgraph(tab.Pthee.i_med$tablarelacionsupera)
 ```
 
-#### PROMETHEE II (medias)
+\newpage
 
-```{r}
+### PROMETHEE II (medias)
+
+```{r, echo=FALSE}
 (tab.Pthee.ii_med = multicriterio.metodo.promethee_ii_med(tab_ep,pesos.criterios,tab.fpref))
 ```
 
@@ -573,23 +609,26 @@ qgraph(tab.Pthee.i_med$tablarelacionsupera)
 qgraph(tab.Pthee.ii_med$tablarelacionsupera)
 ```
 
-#### Comparativa Promethee II: sin medias y con medias
+\newpage
+
+### Comparativa Promethee II: sin medias y con medias
 
 ```{r, echo=FALSE}
 order(tab.Pthee.ii$vflujos.netos,decreasing = T)
 order(tab.Pthee.ii_med$vflujos.netos,decreasing = T)
 ```
 
-### Resolución con Promethee Windows 
+Obtenemos el mismo orden para ambos siendo el orden de preferencia el siguiente: $A_1$: Dell XPS, $A_4$: MacBook Air,  $A_2$: HP Spectre, $A_3$: Lenovo ThinkPad, $A_5$: Asus ZenBook
 
-```{r}
+### Resolución con Promethee Windows
+
+```{r, echo=FALSE}
 res = multicriterio.metodo.promethee_windows(tab_ep, tab.fpref, pesos.criterios)
 res = multicriterio.metodo.promethee_windows (tab_ep, tab.fpref, pesos.criterios,
 fminmax = c("max", "min", "max", "min","max", "min","max"))
 
 res02 = multicriterio.metodo.promethee_windows_kableExtra(res)
 ```
-
 
 ```{r, echo=FALSE}
 res02$tabEscenario %>%
@@ -607,5 +646,10 @@ res02$tabAcciones %>%
 rownames(res$Acciones)
 ```
 
+Con Promethee Windows obtenemos la misma ordenación que en Promethee II
 
+## Conclusion 
 
+El método **PROMETHEE** es mejor para tomar la decisión de que modelo de pórtatil comprar, ya que nos ofrece un rango(incluye todas alternativas) más claro sobre la preferencia de que pórtatil elegir sobre otro. 
+
+El método **ELECTRE** no es un mal método ya que nos ayuda a elegir las alternativas que más dominan sobre las otras, sin embargo sería más complicado de interpretar cuando tengamos muchas alternativas.
